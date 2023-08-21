@@ -1,0 +1,8 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "Fidelity",
+	"webDir": "dist",
+	"server": {
+		"androidScheme": "https"
+	}
+}
