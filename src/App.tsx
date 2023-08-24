@@ -66,7 +66,7 @@ const App = () => {
 				return <Redirect to="/login" />
 			}
 			if (user && !showComponentWhenAuthenticated) {
-				return <Redirect to="/home" />
+				return <Redirect to="/push" />
 			}
 			return component
 		},
