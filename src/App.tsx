@@ -37,8 +37,8 @@ import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { cogSharp, download, push } from "ionicons/icons"
 import { useAtom, useAtomValue } from "jotai"
 import { Fragment, useCallback, useEffect } from "react"
-import Push from "./pages/Push"
 import Pull from "./pages/Pull"
+import Push from "./pages/Push"
 import Setting from "./pages/Setting"
 import CreateAccount from "./pages/login/CreateAccount"
 import ForgotPassword from "./pages/login/ForgotPassword"
@@ -78,30 +78,55 @@ const App = () => {
 			<IonReactRouter>
 				<IonTabs>
 					<IonRouterOutlet>
-						<Route exact={true} path="/login">
-							{getComponentByAuthenticatedStatus(<Login />, false)}
-							<Login />
-						</Route>
-						<Route exact={true} path="/create-account">
-							{getComponentByAuthenticatedStatus(<CreateAccount />, false)}
-						</Route>
-						<Route exact={true} path="/forgot-password">
-							{getComponentByAuthenticatedStatus(<ForgotPassword />, false)}
-						</Route>
-						<Route exact={true} path="/push">
-							{getComponentByAuthenticatedStatus(<Push />, true)}
-						</Route>
-						<Route exact={true} path="/pull">
-							{getComponentByAuthenticatedStatus(<Pull />, true)}
-						</Route>
-						<Route exact={true} path="/setting">
-							{getComponentByAuthenticatedStatus(<Setting />, true)}
-						</Route>
-						<Route exact={true} path="/">
-							{user === undefined && <Fragment />}
-							{user === null && <Redirect to="/login" />}
-							{user && <Redirect to="/push" />}
-						</Route>
+						<Route
+							exact={true}
+							path="/login"
+							render={() => getComponentByAuthenticatedStatus(<Login />, false)}
+						/>
+						<Route
+							exact={true}
+							path="/create-account"
+							render={() =>
+								getComponentByAuthenticatedStatus(<CreateAccount />, false)
+							}
+						/>
+						<Route
+							exact={true}
+							path="/forgot-password"
+							render={() =>
+								getComponentByAuthenticatedStatus(<ForgotPassword />, false)
+							}
+						/>
+						<Route
+							exact={true}
+							path="/push"
+							render={() => getComponentByAuthenticatedStatus(<Push />, true)}
+						/>
+						<Route
+							exact={true}
+							path="/pull"
+							render={() => getComponentByAuthenticatedStatus(<Pull />, true)}
+						/>
+						<Route
+							exact={true}
+							path="/setting"
+							render={() =>
+								getComponentByAuthenticatedStatus(<Setting />, true)
+							}
+						/>
+						<Route
+							exact={true}
+							path="/"
+							render={() => {
+								if (user === undefined) {
+									return <Fragment />
+								}
+								if (user === null) {
+									return <Redirect to="/login" />
+								}
+								return <Redirect to="/push" />
+							}}
+						/>
 					</IonRouterOutlet>
 					<IonTabBar slot="bottom" hidden={hiddenTabs}>
 						<IonTabButton tab="scan" href="/push">
